@@ -21,13 +21,17 @@ class sock:
         if mode == "bind":
             try:
                 self.__s.bind((ip, port))
+                self.__s.listen()
+                
                 self.__mode = mode
+                return [True, "SUCCESS_BIND"]
             except socket.error:
                 return [False, "FAILED_BIND_SOCKET"]
         elif mode == "connect":
             self.__s.settimeout(timeout)
             try:
                 self.__s.connect((ip, port))
+                
                 self.__mode = mode
                 self.__is_connected = True
             except socket.error:
@@ -44,7 +48,7 @@ class sock:
         if self.__mode != "bind":
             return [False, "LISTENNER_IS_FOR_BIND_MODE"]
 
-        c, i = self.s.accept()
+        c, i = self.__s.accept()
         if convert_ip:
             return c, f"{i[0]}:{i[1]}"
         return c, i

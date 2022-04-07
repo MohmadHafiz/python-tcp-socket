@@ -22,7 +22,7 @@ class sock:
             try:
                 self.__s.bind((ip, port))
                 self.__s.listen()
-                
+
                 self.__mode = mode
                 return [True, "SUCCESS_BIND"]
             except socket.error:
@@ -59,6 +59,8 @@ class sock:
 
         if self.__mode == "bind" and conn == None:
             return [False, "CONN_CLI_NOT_PROVIDED"]
+        elif self.__mode == "connect" and not self.__is_connected:
+            return [False, "SOCKET_NOT_CONNECTED"]
 
         if type(data) == str:
             data = data.encode("utf-8")
@@ -82,6 +84,8 @@ class sock:
 
         if self.__mode == "bind" and conn == None:
             return [False, "CONN_CLI_NOT_PROVIDED"]
+        elif self.__mode == "connect" and not self.__is_connected:
+            return [False, "SOCKET_NOT_CONNECTED"]
 
         data = b""
         c = None

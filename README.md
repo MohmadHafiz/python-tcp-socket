@@ -12,7 +12,7 @@ import tcp
 
 # __init__(self, buffer = 2048)
 # you can change the buffer size now or later
-s = sock() 
+s = tcp.sock() 
 
 # changing the buffer size
 # s.buffer = 1000
